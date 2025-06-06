@@ -1,0 +1,32 @@
+name: Selenium Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+
+    - name: Set up Chrome
+      uses: browser-actions/setup-chrome@v1
+
+    - name: Install Maven
+      run: sudo apt install maven -y
+
+    - name: Verify Maven version
+      run: mvn -v
+
+    - name: Build and run tests
+      run: mvn clean test
